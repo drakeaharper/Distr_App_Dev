@@ -108,7 +108,7 @@ recognition.onresult = function(event) {
             showShape(t_plus)
             break
         case 'Wave':
-            showShape(t_plus)
+            showShape(t_wave)
             break
         default:
             break
