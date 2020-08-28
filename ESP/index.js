@@ -6,7 +6,7 @@ function shuffle(a) {
     return a;
 }
 
-var cardTypes = [ 'Circle', 'Square', 'Star' ]
+var cardTypes = [ 'Circle', 'Square', 'Star', 'Plus', 'Wave' ]
 
 var t_star   = '\u2606' // star
 var t_circle = '\u25EF' // circle
@@ -107,7 +107,7 @@ recognition.onresult = function(event) {
         case 'Plus':
             showShape(t_plus)
             break
-        case 'Waves':
+        case 'Wave':
             showShape(t_plus)
             break
         default:
