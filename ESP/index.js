@@ -9,7 +9,7 @@ function shuffle(a) {
 var cardTypes = [ 'Circle', 'Square', 'Star' ]
 
 var t_star   = '\u2606' // star
-var t_circle = '\u20DD' // circle
+var t_circle = '\u25EF' // circle
 var t_square = '\u20DE' // square
 var t_wave   = '\u222D' // wave
 var t_plus   = '\uFF0B' // plus
@@ -26,6 +26,7 @@ function initializeGame() {
     correct_answers = 0
     deck = shuffle(deck)
     deck_position = 0
+    setScore()
 }
 
 var deck_position = 0
@@ -69,6 +70,10 @@ function showShape(shape) {
     $('#shape-display').show()
 }
 
+function setScore() {
+    $('#score-board').first().text(`${correct_answers}/${deck.length}`)
+}
+
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
@@ -108,9 +113,12 @@ recognition.onresult = function(event) {
         default:
             break
     }
-    if (shape.toLocaleLowerCase() === deck[deck_position].toLocaleLowerCase()) { correct_answers++ }
+    if (shape.toLocaleLowerCase() === deck[deck_position].toLocaleLowerCase()) {
+        correct_answers++
+        setScore()
+    }
     deck_position++
-    console.log({card: deck[deck_position], guess: shape, correct_answers: correct_answers, deck_position: deck_position})
+    console.log({card: deck[deck_position - 1], guess: shape, correct_answers: correct_answers, deck_position: deck_position})
     if (deck_position < deck.length) {
         setTimeout(() => {
             playGame(deck_position)
