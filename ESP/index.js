@@ -126,9 +126,9 @@ recognition.onresult = function(event) {
         }, 3000)
     } else if (deck_position >= deck.length) {
         if (correct_answers >= Math.round(deck.length * .48)) {
-            announce("You have E S P")
+            announce("You have E S P, you are one in a million")
         } else {
-            announce("You do not have E S P")
+            announce("You do not have E S P but most people don't so don't feel to bad about yourself")
         }
     }
 }
