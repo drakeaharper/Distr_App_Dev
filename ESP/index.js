@@ -49,7 +49,7 @@ function playGame(index) {
 
 function playRound(card) {
     showCard()
-    console.log(`current card: ${card}`)
+    // console.log(`current card: ${card}`)
 
     recognition.start();
 }
@@ -118,7 +118,7 @@ recognition.onresult = function(event) {
         setScore()
     }
     deck_position++
-    console.log({card: deck[deck_position - 1], guess: shape, correct_answers: correct_answers, deck_position: deck_position})
+    // console.log({card: deck[deck_position - 1], guess: shape, correct_answers: correct_answers, deck_position: deck_position})
     if (deck_position < deck.length) {
         setTimeout(() => {
             playGame(deck_position)
@@ -132,22 +132,29 @@ recognition.onresult = function(event) {
     }
 }
 
-recognition.onspeechend = function() {
+recognition.onspeechend = function(event) {
     recognition.stop();
 }
 
 recognition.onnomatch = function(event) {
     console.log('I didnt recognize that answer.')
+    announce("Sorry, I didn't hear you.")
+        setTimeout(() => {
+            playGame(deck_position)
+        }, 3000)
 }
 
 recognition.onerror = function(event) {
     console.log('Error occurred in recognition: ' + event.error)
-    if (event.error == "no-speech") {
+    if (event.error == "not-allowed") {
+        announce("Sorry, I permission to use your microphone")
+        setTimeout(() => {
+            playGame(deck_position)
+        }, 3500)
+    } else {
         announce("Sorry, I didn't hear you.")
         setTimeout(() => {
             playGame(deck_position)
         }, 3000)
     }
 }
-
-
