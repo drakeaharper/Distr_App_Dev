@@ -93,6 +93,7 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 recognition.onresult = function(event) {
+    recognition.stop();
     var shape = event.results[0][0].transcript;
     switch(deck[deck_position]) {
         case 'Star':
@@ -132,9 +133,9 @@ recognition.onresult = function(event) {
     }
 }
 
-recognition.onspeechend = function(event) {
-    recognition.stop();
-}
+// recognition.onspeechend = function(event) {
+//     recognition.stop();
+// }
 
 recognition.onnomatch = function(event) {
     console.log('I didnt recognize that answer.')
