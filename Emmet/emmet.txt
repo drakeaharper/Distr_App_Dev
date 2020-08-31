@@ -1,0 +1,6 @@
+!
+h1{Emmet Rules}
+p.latest#news>lorem50
+ul>li#reason$*7
+table#main.striped>(tr>th[title="Don't Touch Me"]{Field $}*5)+(tr>td>(div>lorem1*5))
+h1{Emmet Rules}+(p.latest#news>lorem34)+(ul>(li#reason$*7))+table#main.striped>(tr>th[title="Don't Touch Me"]{Field $}*5)+(tr>td>(div>lorem1*5))
