@@ -10,6 +10,7 @@ updateDiplays()
 function initializeGame() {
     roundTracker = 0
     correct_answers = 0
+    updateDiplays()
     // document.querySelector('#start-btn').innerHTML = 'Reset Game'
 }
 
@@ -26,13 +27,13 @@ function playRound(guess) {
         currentCard = _.sample(cardTypes)
         console.log(`current card: ${currentCard}`)
         updateDiplays()
-    } else {
-        if (correctAnswers >= winCondition) {
-            new Audio('./winner.mp3').play()
-        } else {
-            new Audio('./lose_sound.mp3').play()
+    }
 
-        }
+    if (correctAnswers >= winCondition && roundTracker >= numberOfRounds) {
+        new Audio('./winner.mp3').play()
+    } else {
+        new Audio('./lose_sound.mp3').play()
+
     }
 }
 
