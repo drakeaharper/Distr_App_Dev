@@ -12,6 +12,8 @@ function initializeGame() {
     roundTracker = 0
     correctAnswers = 0
     updateDiplays()
+    disableButtons = true
+    toggleButtons()
     // document.querySelector('#start-btn').innerHTML = 'Reset Game'
 }
 
