@@ -1,7 +1,7 @@
 var cardTypes = [ 'circle', 'square', 'star', 'plus', 'wave' ]
 var winCondition = 5
 var correctAnswers = 0
-var roundTracker = 0
+var roundTracker = 1
 var numberOfRounds = 10
 var currentCard = _.sample(cardTypes)
 var disableButtons = false
@@ -9,7 +9,7 @@ console.log(`current card: ${currentCard}`)
 updateDiplays()
 
 function initializeGame() {
-    roundTracker = 0
+    roundTracker = 1
     correctAnswers = 0
     updateDiplays()
     disableButtons = true
@@ -24,6 +24,7 @@ function playRound(guess) {
     console.log({card: currentCard, player_guess: guess, round: roundTracker})
     if (guess.includes(currentCard)) {
         correctAnswers++
+        updateDiplays()
         new Audio('./correct.mp3').play()
     } else {
         window.navigator.vibrate(200)
