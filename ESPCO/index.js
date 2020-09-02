@@ -38,6 +38,7 @@ function playRound(guess) {
         }, 1500)
     }
     if (roundTracker >= numberOfRounds) {
+        toggleButtons()
         if (correctAnswers >= winCondition) {
             new Audio('./winner.mp3').play()
         } else {
@@ -57,5 +58,5 @@ function toggleCard(path) {
 
 function toggleButtons() {
     disableButtons = !disableButtons
-    document.querySelectorAll('button').forEach(item => item.disabled = disableButtons)
+    document.querySelectorAll('button').forEach(item => {if (item.id != 'start-btn') {item.disabled = disableButtons}})
 }
