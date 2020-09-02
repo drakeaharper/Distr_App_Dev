@@ -13,20 +13,22 @@ function initializeGame() {
     correctAnswers = 0
     updateDiplays()
     disableButtons = true
+    toggleCard('./playing_card.JPG')
+    document.querySelector('#winning-message').setAttribute('class', 'hide-element')
+    document.querySelector('#losing-message').setAttribute('class', 'hide-element')
     toggleButtons()
-    // document.querySelector('#start-btn').innerHTML = 'Reset Game'
 }
 
 function playRound(guess) {
     toggleButtons()
+    console.log({card: currentCard, player_guess: guess, round: roundTracker})
+    if (guess.includes(currentCard)) {
+        correctAnswers++
+        new Audio('./correct.mp3').play()
+    } else {
+        window.navigator.vibrate(200)
+    }
     if (roundTracker < numberOfRounds) {
-        console.log({card: currentCard, player_guess: guess, round: roundTracker})
-        if (guess.includes(currentCard)) {
-            correctAnswers++
-            new Audio('./correct.mp3').play()
-        } else {
-            window.navigator.vibrate(200)
-        }
         let pathToShow = `./Zener_Cards/${currentCard}.svg`
         console.log(pathToShow)
         toggleCard(pathToShow)
@@ -38,13 +40,14 @@ function playRound(guess) {
             toggleCard('./playing_card.JPG')
             toggleButtons()
         }, 1500)
-    }
-    if (roundTracker >= numberOfRounds) {
-        toggleButtons()
+    } else {
+        toggleCard('')
         if (correctAnswers >= winCondition) {
             new Audio('./winner.mp3').play()
+            document.querySelector('#winning-message').setAttribute('class', '')
         } else {
             new Audio('./lose_sound.mp3').play()
+            document.querySelector('#losing-message').setAttribute('class', '')
         }
     }
 }
