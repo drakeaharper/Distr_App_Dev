@@ -12,21 +12,23 @@
     <script defer src='./index.js'></script>
     <title>ESPCO</title>
 </head>
-<body>
+<body style="background-color: green;">
     <div class="fluid-container d-flex flex-column justify-content-center align-items-center">
         <button id="start-btn" class='btn btn-primary' onclick='initializeGame()' style="width: 50%; height: auto; font-size: 25px">Reset Game</button>
-        <div class="fluid-container d-flex flex-column justify-content-center align-items-center" style="width: 80%" id="current-card-container">
-            <img src='./playing_card.JPG' class="img-fluid" style="border-radius: 20px; background-color: green;"/>
+        <div class="fluid-container d-flex flex-column justify-content-center align-items-center" id="current-card-container">
+            <img id="main-display" src='./playing_card.JPG' class="img-fluid" style="border-radius: 20px; width: 80%; background-color: green;"/>
         </div>
-        <div class="fluid-container d-flex justify-content-center" id="guess-options">
-            <button id="star" onclick="playRound('star')" class='container-fluid'>&#9734;</button>
-            <button id="circle" onclick="playRound('circle')" class='container-fluid'>&#9711;</button>
-            <button id="square" onclick="playRound('square')" class='container-fluid'>&#8414;</button>
-            <button id="wave" onclick="playRound('wave')" class='container-fluid'>&#8749;</button>
-            <button id="plus" onclick="playRound('plus')" class='container-fluid'>&#65291;</button>
+        <div class="fluid-container d-flex justify-content-center" id="guess-options" style="margin-top: 15px;">
+            <button id="star"   onclick="playRound('./Zener_Cards/star.svg')"   class='container-fluid' style="background=none;"><img class="img-fluid"src="./Zener_Cards/star.svg"  alt=""></button>
+            <button id="circle" onclick="playRound('./Zener_Cards/circle.svg')" class='container-fluid' style="background=none;"><img class="img-fluid"src="./Zener_Cards/circle.svg" alt=""></button>
+            <button id="square" onclick="playRound('./Zener_Cards/square.svg')" class='container-fluid' style="background=none;"><img class="img-fluid"src="./Zener_Cards/square.svg" alt=""></button>
+            <button id="wave"   onclick="playRound('./Zener_Cards/wave.svg')"   class='container-fluid' style="background=none;"><img class="img-fluid"src="./Zener_Cards/wave.svg"   alt=""></button>
+            <button id="plus"   onclick="playRound('./Zener_Cards/plus.svg')"   class='container-fluid' style="background=none;"><img class="img-fluid"src="./Zener_Cards/plus.svg"   alt=""></button>
         </div>
-        <div id="round-display"></div>
-        <div id="score-display"></div>
+        <div style="margin-top: 15px;">
+            <h2 id="round-display" style="color:ivory" class=""></h2>
+            <h2 id="score-display" style="color:ivory" class=""></h2>
+        </div>
     </div>
 </body>
 </html>
