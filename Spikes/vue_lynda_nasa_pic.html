@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Spike</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app" class="m-3">
+        <img :src="imgSrc" :title="imgTitle">
+    </div>
+    <script>
+        var nasa_api_key = 'api_key=Lxkhrn1egKeYKzGLc6VbPRGBv07UIfFdfYulrHJ7'
+        var today = getToday()
+        var base_url = 'https://api.nasa.gov/planetary/apod?'
+        var url = base_url  + nasa_api_key + '&' + today
+        console.log(url)
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                imgSrc: '',
+                imgTitle: ''
+            }
+        });
+
+        axios.get(url)
+            .then(function (res) {
+                vm.imgSrc = res.data.url;
+                vm.imgTitle = res.data.title;
+            });
+
+        function getToday() {
+            let dateString = new Date().toLocaleDateString().split('/')
+            parseInt(dateString[0]) < 10 ? dateString[0] = `0${dateString[0]}` : null
+            return `date=${dateString[2]}-${dateString[0]}-${dateString[1]}`
+        }
+    </script>
+</body>
+</html>

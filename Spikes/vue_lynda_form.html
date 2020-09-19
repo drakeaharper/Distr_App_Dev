@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Spike</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="m-3">
+        <div v-show='!submitted' class="container">
+            <form class="mt-5">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" v-model="email" id="email" class="form-control form-control-lg">
+                </div>
+                <button type="submit" @click.prevent="process" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <h2 v-show='submitted' v-cloak>Thank you for submitting {{email}}</h2>
+    </div>
+    <script>
+        var vm = new Vue({
+        el: '#app',
+        data: {
+            email: 'dudes@surferboyz.net',
+            submitted: false
+        },
+        methods: {
+            process: function () {
+                this.submitted = true
+            }
+        }
+    });
+    </script>
+</body>
+</html>
