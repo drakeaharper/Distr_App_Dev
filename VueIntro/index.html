@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Character Set</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body style="background-color: black; color: white;">
+    <div id="app">
+        <div style="display: flex; flex-direction:row; margin: 2rem; justify-content: center; align-items: center;">
+            <div v-for="role of roles" style="padding: 5rem;" @click="selected=role.name">
+                <h2>{{role.name}}</h2>
+                <div>{{role.hint1}}</div>
+                <div>{{role.hint2}}</div>
+            </div>
+        </div>
+        <div v-show="selected===role.name" v-for="role of roles" style="display: flex; flex-direction:row; margin: 2rem; justify-content: center; align-items: center;">
+            <img src="role.imgSrc" :alt="role.name" style="padding: 6rem;">
+            <h1>{{role.name}}</h1>
+        </div>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            selected: 'Customer',
+            roles: [
+                {
+                    name: 'Customer',
+                    hint1: 'Female',
+                    hint2: 'High Pitched',
+                    imgSrc: ''
+                },
+                {
+                    name: 'Tech Lead',
+                    hint1: 'Gruff',
+                    hint2: 'No Nonsense',
+                    imgSrc: ''
+                },
+                {
+                    name: 'Mentor',
+                    hint1: 'Fatherly',
+                    hint2: 'Loving',
+                    imgSrc: ''
+                },
+                {
+                    name: 'Narrator',
+                    hint1: 'Neutral',
+                    hint2: 'Uninvolved',
+                    imgSrc: ''
+                },
+                {
+                    name: 'Teacher',
+                    hint1: 'Crazy',
+                    hint2: 'The Full Wagstaff',
+                    imgSrc: ''
+                },
+            ]
+        }
+    })
+</script>
+</html>
