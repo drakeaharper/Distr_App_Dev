@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Characters</title>
+  <style>
+    /* all */
+    body {
+      background-color: black;
+      color: white;
+      margin: 4%;
+    }
+
+    /* navigation */
+    #charRow {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      margin: 4%;
+    }
+    .char {
+      width: 10em;
+    }
+    .label {
+      font-weight: bold;
+      font-size: large;
+      font-family: sans-serif; 
+    }
+    .voiceClue {
+      font-size: medium;
+      font-family: serif; 
+      padding-left: 1em; 
+    }
+
+    /* current character */
+    .charFocus {
+      margin-left: 24%;
+
+    }
+    .charFocus>img {
+      width:  300px;
+      height: 500px;
+      vertical-align: top;
+    }
+    .bigLabel {
+      font-family: sans-serif;
+      font-weight: bold;
+      font-size: 300%;
+      margin-left: 5%;
+      margin-top: 50px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="charRow">
+      <div class="char">
+        <span class="label">Customer</span>
+        <div class="voiceClue">female</div>
+        <div class="voiceClue">high pitch</div>
+      </div>
+      <div class="char">
+        <span class="label">Tech Lead</span>
+        <div class="voiceClue">gruff</div>
+        <div class="voiceClue">no nonsense</div>
+      </div>
+      <div class="char">
+        <span class="label">Mentor</span>
+        <div class="voiceClue">fatherly</div>
+        <div class="voiceClue">loving</div>
+      </div>
+      <div class="char">
+        <span class="label">Narrator</span>
+        <div class="voiceClue">nuetral</div>
+        <div class="voiceClue">uninvolved</div>
+      </div>
+      <div class="char">
+        <span class="label">Teacher</span>
+        <div class="voiceClue">crazy</div>
+        <div class="voiceClue">the full Wagstaff</div>
+      </div>
+    </div>
+    <div class="charFocus">
+      <img src="customer.png" alt="customer">
+      <span class="bigLabel">Customer</span>
+    </div>
+    <div class="charFocus">
+      <img src="techLead.png" alt="tech lead">
+      <span class="bigLabel">Tech Lead</span>
+    </div>
+    <div class="charFocus">
+      <img src="mentor.png" alt="mentor">
+      <div class="bigLabel">Mentor</div>
+    </div>
+    <div class="charFocus">
+      <img src="narrator.png" alt="narrator">
+      <div class="bigLabel">Narrator</div>
+    </div>
+    <div class="charFocus">
+      <img src="teacher.png" alt="teacher">
+      <div class="bigLabel">Teacher</div>
+    </div>
+  </div>
+</body>
+</html>

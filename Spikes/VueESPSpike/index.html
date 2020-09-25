@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Spike</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        button {
+            height: 30px;
+        }
+    </style>
+</head>
+<body style="background-color: gray;">
+    <div id="app" class="m-3 d-flex justify-content-center align-items-center">
+        <div class="p-2 text-white d-flex justify-content-center align-items-center">
+            <div id="black_box" @click="changeDarkBox" class="m-5 bg-dark text-white d-flex justify-content-center align-items-center flex-column" style="width: 300px; height: 300px;">
+                <div id="darkBoxText" class="text-white m-3">Lorem ipsum dolor sit amet.</div>
+                <button>Shake something</button>
+            </div>
+            <button style="height: 30px;">Shake something</button>
+            <div id="white_box" @click="changeWhiteBox" class="m-5 d-flex bg-light justify-content-center align-items-center d-flex flex-column shake" style="width: 300px; height: 300px;">
+                <div  id="whiteBoxText" class="text-dark m-3">Lorem ipsum dolor sit amet.</div>
+                <button style="height: 30px;">Shake something</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            changeWhiteBox: function () {
+                let whiteBox = $('#white_box')
+                whiteBox.toggleClass('bg-light')
+                whiteBox.toggleClass('bg-dark')
+
+                let blackText = $('#whiteBoxText')
+                blackText.toggleClass('text-dark')
+                blackText.toggleClass('text-white')
+            },
+            changeDarkBox: function () {
+                let blackBox = $('#black_box')
+                blackBox.toggleClass('bg-dark')
+                blackBox.toggleClass('bg-light')
+
+                let whiteText = $('#darkBoxText')
+                whiteText.toggleClass('text-white')
+                whiteText.toggleClass('text-dark')
+            }
+        }
+    });
+    </script>
+</body>
+</html>
