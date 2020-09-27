@@ -5,26 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Spike</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         button {
             height: 30px;
+            width: 150px;
+            margin: 5px;
+        }
+        .shaker {
+            animation: shake 2s;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes shake{
+            2% {transform:translate(1.5px, 1.5px) rotate(1.5deg)}
+            4% {transform:translate(.5px, -.5px) rotate(.5deg)}
+            6% {transform:translate(1.5px, 2.5px) rotate(1.5deg)}
+            8% {transform:translate(.5px, 2.5px) rotate(.5deg)}
+            10% {transform:translate(2.5px, 1.5px) rotate(.5deg)}
+            12% {transform:translate(-.5px, -1.5px) rotate(-.5deg)}
+            14% {transform:translate(1.5px, 2.5px) rotate(-.5deg)}
+            16% {transform:translate(2.5px, -1.5px) rotate(1.5deg)}
+            18% {transform:translate(2.5px, 2.5px) rotate(-.5deg)}
+            20% {transform:translate(-.5px, -1.5px) rotate(1.5deg)}
+            22% {transform:translate(-1.5px, -.5px) rotate(.5deg)}
+            24% {transform:translate(2.5px, -1.5px) rotate(1.5deg)}
+            26% {transform:translate(.5px, 2.5px) rotate(1.5deg)}
+            28% {transform:translate(-.5px, 2.5px) rotate(-.5deg)}
+            30% {transform:translate(.5px, 2.5px) rotate(1.5deg)}
+            32% {transform:translate(-1.5px, -.5px) rotate(-.5deg)}
+            34% {transform:translate(.5px, -.5px) rotate(.5deg)}
+            36% {transform:translate(-1.5px, .5px) rotate(1.5deg)}
+            38% {transform:translate(-1.5px, 1.5px) rotate(1.5deg)}
+            40% {transform:translate(2.5px, .5px) rotate(.5deg)}
+            42% {transform:translate(.5px, .5px) rotate(1.5deg)}
+            44% {transform:translate(-.5px, .5px) rotate(.5deg)}
+            46% {transform:translate(2.5px, 1.5px) rotate(1.5deg)}
+            48% {transform:translate(2.5px, 1.5px) rotate(-.5deg)}
+            50% {transform:translate(-1.5px, 2.5px) rotate(-.5deg)}
+            52% {transform:translate(.5px, -1.5px) rotate(1.5deg)}
+            54% {transform:translate(.5px, -1.5px) rotate(.5deg)}
+            56% {transform:translate(1.5px, -1.5px) rotate(-.5deg)}
+            58% {transform:translate(1.5px, .5px) rotate(.5deg)}
+            60% {transform:translate(-.5px, .5px) rotate(.5deg)}
+            62% {transform:translate(.5px, .5px) rotate(-.5deg)}
+            64% {transform:translate(-1.5px, -.5px) rotate(1.5deg)}
+            66% {transform:translate(-1.5px, 2.5px) rotate(-.5deg)}
+            68% {transform:translate(-1.5px, 1.5px) rotate(.5deg)}
+            70% {transform:translate(.5px, 1.5px) rotate(.5deg)}
+            72% {transform:translate(-1.5px, 2.5px) rotate(.5deg)}
+            74% {transform:translate(2.5px, .5px) rotate(-.5deg)}
+            76% {transform:translate(.5px, -1.5px) rotate(1.5deg)}
+            78% {transform:translate(.5px, 1.5px) rotate(.5deg)}
+            80% {transform:translate(-.5px, -.5px) rotate(.5deg)}
+            82% {transform:translate(1.5px, 1.5px) rotate(1.5deg)}
+            84% {transform:translate(.5px, .5px) rotate(.5deg)}
+            86% {transform:translate(-.5px, .5px) rotate(1.5deg)}
+            88% {transform:translate(1.5px, .5px) rotate(1.5deg)}
+            90% {transform:translate(-.5px, 2.5px) rotate(-.5deg)}
+            92% {transform:translate(-1.5px, -1.5px) rotate(1.5deg)}
+            94% {transform:translate(-1.5px, 2.5px) rotate(1.5deg)}
+            96% {transform:translate(-1.5px, -1.5px) rotate(1.5deg)}
+            98% {transform:translate(1.5px, -1.5px) rotate(1.5deg)}
+            0%, 100%{transform:translate(0, 0) rotate(0)}
         }
     </style>
 </head>
-<body style="background-color: gray;">
+<body id="main_box" style="background-color: gray;">
     <div id="app" class="m-3 d-flex justify-content-center align-items-center">
         <div class="p-2 text-white d-flex justify-content-center align-items-center">
-            <div id="black_box" @click="changeDarkBox" class="m-5 bg-dark text-white d-flex justify-content-center align-items-center flex-column" style="width: 300px; height: 300px;">
+            <div id="black_box" class="m-5 bg-dark text-white d-flex justify-content-center align-items-center flex-column" style="width: 300px; height: 300px;">
                 <div id="darkBoxText" class="text-white m-3">Lorem ipsum dolor sit amet.</div>
-                <button>Shake something</button>
+                <button id="black_button" @click="playShakeAnimation('white_box')">Shake Right Box</button>
+                <button id="black_button" @click="changeDarkBox">Change colors</button>
             </div>
-            <button style="height: 30px;">Shake something</button>
-            <div id="white_box" @click="changeWhiteBox" class="m-5 d-flex bg-light justify-content-center align-items-center d-flex flex-column shake" style="width: 300px; height: 300px;">
+            <button id="neutral_button" @click="playShakeAnimation('main_box')" style="height: 30px;">Shake Everything</button>
+            <div id="white_box" class="m-5 d-flex bg-light justify-content-center align-items-center d-flex flex-column" style="width: 300px; height: 300px;">
                 <div  id="whiteBoxText" class="text-dark m-3">Lorem ipsum dolor sit amet.</div>
-                <button style="height: 30px;">Shake something</button>
+                <button id="white_button" @click="playShakeAnimation('black_box')" style="height: 30px;">Shake Left Box</button>
+                <button id="white_button" @click="changeWhiteBox" style="height: 30px;">Change Colors</button>
             </div>
         </div>
     </div>
@@ -50,6 +110,12 @@
                 let whiteText = $('#darkBoxText')
                 whiteText.toggleClass('text-white')
                 whiteText.toggleClass('text-dark')
+            },
+            playShakeAnimation: function(buttonId){
+                $(`#${buttonId}`).addClass('shaker');
+                setTimeout(() => {
+                    $(`#${buttonId}`).removeClass('shaker');
+                },2000);
             }
         }
     });
