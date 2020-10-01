@@ -8,31 +8,49 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
         .tooltipper {
+            display: none;
             width: 120px;
             background-color: rgb(75, 75, 75);
             color: #fff;
             text-align: center;
             padding: 5px 0;
             border-radius: 6px;
-            position: absolute;
             z-index: 1;
+            margin-top: 30px;
+            position: absolute;
+            top: 35px;
+        }
+
+        .tooltipper-parent {
+            position: relative;
+        }
+
+        .tooltipper-parent:hover > .tooltipper {
+            display: block;
+        }
+
+        select {
+            margin: 20px;
+            color: black;
         }
     </style>
 </head>
 <body style="background-color: black; color: white;">
     <div id="app">
-        <div style="display: flex; flex-direction:row; justify-content: center; align-items: center;">
-            <div v-for="role of roles" style="padding: 5rem; position: relative;" @click="selected=role.name" @mouseover="hover_value=role.name" @mouseleave="hover_value=''">
-                <h2>{{role.name}}</h2>
-                <div v-show="hover_value===role.name" class="tooltipper">
+        <select class="selectpicker"  v-model="selected">
+            <option v-for="role of roles" style="color: black; padding: 5rem; position: relative;">
+                {{role.name}}
+            </option>
+        </select>
+        <div v-show="selected===role.name" v-for="role of roles" style="display: flex; flex-direction:row; justify-content: center; align-items: center;">
+            <img :src="role.imgSrc" :alt="role.name" style="padding: 4rem; width: 450px; height: 700px;">
+            <div style="display: flex; flex-direction:row; flex-direction: column; justify-content: center; align-items: center;" class="tooltipper-parent">
+                <h1>{{role.name}}</h1>
+                <div class="tooltipper" >
                     <div>{{role.hint1}}</div>
                     <div>{{role.hint2}}</div>
                 </div>
             </div>
-        </div>
-        <div v-show="selected===role.name" v-for="role of roles" style="display: flex; flex-direction:row; justify-content: center; align-items: center;">
-            <img :src="role.imgSrc" :alt="role.name" style="padding: 4rem; width: 450px; height: 700px;">
-            <h1>{{role.name}}</h1>
         </div>
     </div>
 </body>
@@ -41,7 +59,7 @@
         el: '#app',
         data: {
             message: 'Hello Vue!',
-            selected: 'Customer',
+            selected: '',
             hover_value: '',
             roles: [
                 {
