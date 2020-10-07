@@ -28,8 +28,8 @@
     <div id="app" class="flex-column">
         <div class="flex-column" >
             <div style="display: flex; flex-direction: row;">
-                <button id="start-btn"     class='btn' onclick='initializeGame()'>Reset Game</button>
-                <button id="dark-mode-btn" class='btn' onclick='toggleDarkMode()'>Dark Mode: On</button>
+                <button id="start-btn"     :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='initializeGame()'>Reset Game</button>
+                <button id="dark-mode-btn" :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='toggleDarkMode()'>Dark Mode: On</button>
             </div>
             <div class="flex-column" id="current-card-container">
                 <div id="card-display" class="flex-column" style="margin-top: 15px;">
@@ -43,8 +43,8 @@
                 </div>
             </div>
             <div class="flex-row" id="guess-options" style="margin-top: 15px;">
-                <button v-for="card of zenerCards" :id="card" :onclick="'playRound(\'' + card + '\')'" class='guessButton' style="opacity: .9; display:flex; justify-content: center; align-items: center;">
-                    <img style="height: 58px;" :src="'./Zener_Cards/' + card + '.svg'">
+                <button v-for="card of cardTypes" :id="card" @click="playRound(card)" class='guessButton' style="opacity: .9; margin-left: 3px; margin-right: 3px; display:flex; justify-content: center; align-items: center;">
+                    <img style="height: 50px;" :src="'./Zener_Cards/cards/' + card + '_stroke.svg'">
                 </button>
             </div>
             <div style="margin-top: 15px;">
@@ -54,15 +54,135 @@
         </div>
     </div>
     <script>
-        new Vue({
+        var vm = new Vue({
             el: '#app',
             data: {
-                zenerCards: {
-                    star: 'star',
-                    circle: 'circle',
-                    square: 'square',
-                    wave: 'waves',
-                    plus: 'plus'
+                cardTypes: [ 'circle', 'square', 'star', 'plus', 'waves' ],
+                winCondition: 5,
+                correctAnswers: 0,
+                roundTracker: 1,
+                numberOfRounds: 10,
+                currentCard: 'circle',
+                disableButtons: false,
+                browserCookies: {darkMode: 'true'},
+                reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            },
+            methods: {
+                getCookies: function () {
+                    let cookies = {}
+                    if (document.cookie != "") {
+                        document.cookie.split(';').map(item => {
+                            let dough = item.split('=')
+                            cookies[dough[0]] = dough[1]
+                        })
+                    }
+                    return cookies
+                },
+
+                writeCookie: function () {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (182 * 24 * 60 * 60 * 1000));
+                    var expires = "expires=" + date.toUTCString();
+                    for(key in this.browserCookies) {
+                        document.cookie = `${key}=${this.browserCookies[key]}; ${expires}; path=/`
+                    }
+                },
+
+                toggleDarkMode: function () {
+                    if (this.browserCookies['darkMode'] === 'true') {
+                        this.darkModeDeactivate()
+                    } else {
+                        this.darkModeActivate()
+                    }
+                },
+
+                darkModeDeactivate: function () {
+                    var sheet = document.createElement('style')
+                    sheet.innerHTML = ".main-background {background-color: green;} #start-btn, #dark-mode-btn {background-color: #0d6efd;}";
+                    document.body.appendChild(sheet);
+                    this.browserCookies['darkMode'] = 'false'
+                    document.getElementById('dark-mode-btn').innerText = 'Dark Mode: Off'
+                    this.writeCookie()
+                },
+
+                darkModeActivate: function () {
+                    var sheet = document.createElement('style')
+                    sheet.innerHTML = ".main-background {background-color: black;} #start-btn, #dark-mode-btn {background-color: #272727;}";
+                    document.body.appendChild(sheet);
+                    this.browserCookies['darkMode'] = 'true'
+                    document.getElementById('dark-mode-btn').innerText = 'Dark Mode: On'
+                    this.writeCookie()
+                },
+
+                initializeGame: function () {
+                    this.roundTracker = 1
+                    this.correctAnswers = 0
+                    this.updateDiplays()
+                    this.disableButtons = true
+                    this.toggleCard('./playing_card.JPG')
+                    document.querySelector('#winning-message').setAttribute('class', 'hide-element')
+                    document.querySelector('#losing-message').setAttribute('class', 'hide-element')
+                    this.toggleButtons()
+                },
+
+                playRound: function (guess) {
+                    this.toggleButtons()
+                    console.log({card: this.currentCard, player_guess: guess, round: this.roundTracker})
+                    if (guess.includes(this.currentCard)) {
+                        this.correctAnswers++
+                        this.updateDiplays()
+                        new Audio('./correct.mp3').play()
+                    } else {
+                        window.navigator.vibrate(200)
+                        if (this.reduceMotion) {
+                            document.getElementById('main-display').setAttribute('class', 'danger')
+                            setTimeout(() => {
+                                document.getElementById('main-display').setAttribute('class', '')
+                            }, 1500)
+                        } else {
+                            document.querySelector('body').setAttribute('class', ' main-background flex-column shaker')
+                            setTimeout(() => {
+                                document.querySelector('body').setAttribute('class', 'main-background flex-column')
+                            }, 1500)
+                        }
+                    }
+                    if (this.roundTracker < this.numberOfRounds) {
+                        let pathToShow = `./Zener_Cards/cards/${this.currentCard}_stroke.svg`
+                        this.toggleCard(pathToShow)
+                        this.roundTracker++
+                        this.currentCard = _.sample(this.cardTypes)
+                        console.log(`current card: ${this.currentCard}`)
+                        this.updateDiplays()
+                        setTimeout(() => {
+                            this.toggleCard('./playing_card.JPG')
+                            this.toggleButtons()
+                        }, 1500)
+                    } else {
+                        if (this.correctAnswers >= this.winCondition) {
+                            new Audio('./winner.mp3').play()
+                            document.querySelector('#winning-message').setAttribute('class', '')
+                            this.toggleCard('./Zener_Cards/happy.svg')
+                        } else {
+                            this.toggleCard('./Zener_Cards/sad.svg')
+                            new Audio('./lose_sound.mp3').play()
+                            document.querySelector('#losing-message').setAttribute('class', '')
+                        }
+                    }
+                },
+
+                updateDiplays: function () {
+                    document.querySelector('#score-display').innerHTML = `Score: ${this.correctAnswers}/${this.numberOfRounds}`
+                    document.querySelector('#round-display').innerHTML = `Round: ${this.roundTracker}/${this.numberOfRounds}`
+                },
+
+                toggleCard: function (path) {
+                    console.log(`toggle: ${path}`)
+                    document.getElementById('main-display').src = path
+                },
+
+                toggleButtons: function () {
+                    this.disableButtons = !this.disableButtons
+                    document.querySelectorAll('button').forEach(item => {if (item.id != 'start-btn' && item.id != 'dark-mode-btn') {item.disabled = this.disableButtons}})
                 }
             }
         });

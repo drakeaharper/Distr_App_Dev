@@ -5,18 +5,29 @@
     height: 60px;
     width: 60px;
 }
-.main-background {
+.main_background {
     background-color: green;
+}
+.main_background_DARK {
+    background-color: black;
 }
 .danger {
     background-color: rgb(214, 0, 0) !important;
 }
-#start-btn, #dark-mode-btn {
+.feature_button {
     width: 50%;
     height: auto;
     font-size: 20px;
     margin: 5px;
     background-color: #0d6efd;
+    color: white;
+}
+.feature_button_DARK {
+    width: 50%;
+    height: auto;
+    font-size: 20px;
+    margin: 5px;
+    background-color: #272727;
     color: white;
 }
 .flex-row {

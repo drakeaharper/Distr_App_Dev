@@ -51,10 +51,7 @@
   <g
      id="g1925"
      transform="translate(-260,1.921275)">
-    <path
-       d="M 302.26747,20.074066 L 399.34551,20.074066 C 407.80369,20.074066 414.61297,26.883355 414.61297,35.341531 L 414.61297,212.76127 C 414.61297,221.21945 407.80369,228.02872 399.34551,228.02872 L 302.26747,228.02872 C 293.80929,228.02872 287,221.21945 287,212.76127 L 287,35.341531 C 287,26.883355 293.80929,20.074066 302.26747,20.074066 z "
-       style="fill:white;fill-opacity:1;stroke:black;stroke-width:4.00000238;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2089" />
+
     <path
        d="M 309.0881,82.350822 L 392.52487,82.350822 L 392.52487,165.75196 L 309.0881,165.75196 L 309.0881,82.350822 z "
        style="fill:none;fill-opacity:1;stroke:black;stroke-width:12;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;stroke-dasharray:none"
