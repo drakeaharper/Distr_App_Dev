@@ -61,9 +61,9 @@ function playRound(guess) {
                 mainImageDisplay.setAttribute('class', 'img-fluid')
             }, 1500)
         } else {
-            $('body').addClass('shaker')
+            document.querySelector('body').setAttribute('class', ' main-background flex-column shaker')
             setTimeout(() => {
-                $('body').removeClass('shaker')
+                document.querySelector('body').setAttribute('class', 'main-background flex-column')
             }, 1500)
         }
     }
@@ -102,7 +102,7 @@ function toggleCard(path) {
 
 function toggleButtons() {
     disableButtons = !disableButtons
-    document.querySelectorAll('button').forEach(item => {if (item.id != 'start-btn') {item.disabled = disableButtons}})
+    document.querySelectorAll('button').forEach(item => {if (item.id != 'start-btn' && item.id != 'dark-mode-btn') {item.disabled = disableButtons}})
 }
 
 function toggleDarkMode() {
