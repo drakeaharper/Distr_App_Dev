@@ -28,12 +28,13 @@
     <div id="app" class="flex-column">
         <div class="flex-column" >
             <div style="display: flex; flex-direction: row;">
-                <button id="start-btn"     :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='initializeGame()'>Reset Game</button>
-                <button id="dark-mode-btn" :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='toggleDarkMode()'>Dark Mode: On</button>
+                <button id="start-btn"        :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='initializeGame()'>Reset Game</button>
+                <button id="dark-mode-btn"    :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='toggleDarkMode()'>Dark Mode: On</button>
+                <button id="instructions-btn" :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='showInstructions()'>How to Play</button>
             </div>
             <div class="flex-column" id="current-card-container">
-                <div id="card-display" class="flex-column" style="margin-top: 15px;">
-                    <img id="main-display" src='./playing_card.JPG' style="border-radius: 20px; width: 305px; height: 431px;"/>
+                <div id="card-display" class="flex-column" style="margin-top: 15px; width: 305px; height: 431px;">
+                    <img id="main-display" src='./playing_card.JPG' style="border-radius: 20px; width: 295px; height: 431px;"/>
                 </div>
                 <div id="winning-message" class="hide-element" style="color:ivory">
                     <p>You have ESP!</p>
@@ -98,7 +99,7 @@
 
                 darkModeDeactivate: function () {
                     var sheet = document.createElement('style')
-                    sheet.innerHTML = ".main-background {background-color: green;} #start-btn, #dark-mode-btn {background-color: #0d6efd;}";
+                    sheet.innerHTML = ".main-background {background-color: green;} #start-btn, #dark-mode-btn, #instructions-btn {background-color: #0d6efd;}";
                     document.body.appendChild(sheet);
                     this.browserCookies['darkMode'] = 'false'
                     document.getElementById('dark-mode-btn').innerText = 'Dark Mode: Off'
@@ -107,7 +108,7 @@
 
                 darkModeActivate: function () {
                     var sheet = document.createElement('style')
-                    sheet.innerHTML = ".main-background {background-color: black;} #start-btn, #dark-mode-btn {background-color: #272727;}";
+                    sheet.innerHTML = ".main-background {background-color: black;} #start-btn, #dark-mode-btn, #instructions-btn {background-color: #272727;}";
                     document.body.appendChild(sheet);
                     this.browserCookies['darkMode'] = 'true'
                     document.getElementById('dark-mode-btn').innerText = 'Dark Mode: On'
@@ -182,7 +183,19 @@
 
                 toggleButtons: function () {
                     this.disableButtons = !this.disableButtons
-                    document.querySelectorAll('button').forEach(item => {if (item.id != 'start-btn' && item.id != 'dark-mode-btn') {item.disabled = this.disableButtons}})
+                    document.querySelectorAll('button').forEach(item => {
+                        if (
+                            item.id != 'start-btn'
+                            && item.id != 'dark-mode-btn'
+                            && item.id != 'instructions-btn'
+                        ) {
+                            item.disabled = this.disableButtons
+                        }
+                    })
+                },
+
+                showInstructions: function () {
+                    alert("Press a button to guess what shape is on the card, if you score 5 or higher you have Extra Senesory Power (ESP)")
                 }
             }
         });
