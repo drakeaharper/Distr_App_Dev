@@ -17,9 +17,6 @@
     <!-- Lodash -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
 
-    <!-- Code imports-->
-    <script defer src='./index.js'></script>
-
     <!-- Style imports-->
     <link rel="stylesheet" href="shaker_animation.css">
     <link rel="stylesheet" href="basic_styles.css">
@@ -28,9 +25,9 @@
     <div id="app" class="flex-column">
         <div class="flex-column" >
             <div style="display: flex; flex-direction: row;">
-                <button id="start-btn"        :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='initializeGame()'>Reset Game</button>
-                <button id="dark-mode-btn"    :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='toggleDarkMode()'>Dark Mode: On</button>
-                <button id="instructions-btn" :class="{feature_button: browserCookies['darkMode'], feature_button_DARK: !browserCookies['darkMode']}" @click='showInstructions()'>How to Play</button>
+                <button id="start-btn"        :class="{feature_button: darkMode, feature_button_DARK: !darkMode}" @click='initializeGame()'>Reset Game</button>
+                <button id="dark-mode-btn"    :class="{feature_button: darkMode, feature_button_DARK: !darkMode}" @click='toggleDarkMode()'>Dark Mode: On</button>
+                <button id="instructions-btn" :class="{feature_button: darkMode, feature_button_DARK: !darkMode}" @click='showInstructions()'>How to Play</button>
             </div>
             <div class="flex-column" id="current-card-container">
                 <div id="card-display" class="flex-column" style="margin-top: 15px; width: 305px; height: 431px;">
@@ -55,6 +52,31 @@
         </div>
     </div>
     <script>
+        console.log("Icons made by Freepik https://www.flaticon.com/authors/freepik")
+
+        function getCookies() {
+            let cookies = {}
+            if (document.cookie != "") {
+                document.cookie.split(';').map(item => {
+                    let dough = item.split('=')
+                    cookies[dough[0]] = dough[1]
+                })
+            }
+            return cookies
+        }
+
+        function writeCookie() {
+            var date = new Date();
+            date.setTime(date.getTime() + (182 * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + date.toUTCString();
+            for(key in browserCookies) {
+                document.cookie = `${key}=${browserCookies[key]}; ${expires}; path=/`
+                console.log(document.cookie)
+            }
+        }
+
+        var browserCookies = getCookies()
+
         var vm = new Vue({
             el: '#app',
             data: {
@@ -65,32 +87,12 @@
                 numberOfRounds: 10,
                 currentCard: 'circle',
                 disableButtons: false,
-                browserCookies: {darkMode: 'true'},
+                darkMode: browserCookies['darkMode'],
                 reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
             },
             methods: {
-                getCookies: function () {
-                    let cookies = {}
-                    if (document.cookie != "") {
-                        document.cookie.split(';').map(item => {
-                            let dough = item.split('=')
-                            cookies[dough[0]] = dough[1]
-                        })
-                    }
-                    return cookies
-                },
-
-                writeCookie: function () {
-                    var date = new Date();
-                    date.setTime(date.getTime() + (182 * 24 * 60 * 60 * 1000));
-                    var expires = "expires=" + date.toUTCString();
-                    for(key in this.browserCookies) {
-                        document.cookie = `${key}=${this.browserCookies[key]}; ${expires}; path=/`
-                    }
-                },
-
                 toggleDarkMode: function () {
-                    if (this.browserCookies['darkMode'] === 'true') {
+                    if (browserCookies['darkMode'] === 'true') {
                         this.darkModeDeactivate()
                     } else {
                         this.darkModeActivate()
@@ -98,21 +100,23 @@
                 },
 
                 darkModeDeactivate: function () {
+                    console.log('deactivate')
                     var sheet = document.createElement('style')
                     sheet.innerHTML = ".main-background {background-color: green;} #start-btn, #dark-mode-btn, #instructions-btn {background-color: #0d6efd;}";
                     document.body.appendChild(sheet);
-                    this.browserCookies['darkMode'] = 'false'
+                    browserCookies['darkMode'] = 'false'
                     document.getElementById('dark-mode-btn').innerText = 'Dark Mode: Off'
-                    this.writeCookie()
+                    writeCookie()
                 },
 
                 darkModeActivate: function () {
+                    console.log('activate')
                     var sheet = document.createElement('style')
                     sheet.innerHTML = ".main-background {background-color: black;} #start-btn, #dark-mode-btn, #instructions-btn {background-color: #272727;}";
                     document.body.appendChild(sheet);
-                    this.browserCookies['darkMode'] = 'true'
+                    browserCookies['darkMode'] = 'true'
                     document.getElementById('dark-mode-btn').innerText = 'Dark Mode: On'
-                    this.writeCookie()
+                    writeCookie()
                 },
 
                 initializeGame: function () {
@@ -177,7 +181,6 @@
                 },
 
                 toggleCard: function (path) {
-                    console.log(`toggle: ${path}`)
                     document.getElementById('main-display').src = path
                 },
 
@@ -199,6 +202,20 @@
                 }
             }
         });
+
+        if (browserCookies['darkMode'] === undefined) {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                vm.darkModeActivate()
+            } else {
+                vm.darkModeDeactivate()
+            }
+        } else if (browserCookies['darkMode'] === 'true') {
+            vm.darkModeActivate()
+        } else {
+            vm.darkModeDeactivate()
+        }
+
+        vm.initializeGame()
     </script>
 </body>
 </html>
