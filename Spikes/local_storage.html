@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>This page stores, {key: "hello"} in local storage when the button is pressed</h3>
+    <button onclick="spikeTest()">Click Me</button>
+    <div id="spike-display"></div>
+</body>
+<script>
+    ////////////////// SPIKE CODE HERE ///////////////////////
+    function spikeTest() {
+        localStorage.setItem("hello", "world")
+        console.log(localStorage.getItem("hello"))
+    }
+    //////////////////////////////////////////////////////////
+</script>
+</html>

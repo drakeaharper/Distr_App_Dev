@@ -25,9 +25,9 @@
     <div id="app" class="flex-column">
         <div class="flex-column" >
             <div style="display: flex; flex-direction: row;">
-                <button id="start-btn"        :class="{feature_button: darkMode, feature_button_DARK: !darkMode}" @click='initializeGame()'>Reset Game</button>
-                <button id="dark-mode-btn"    :class="{feature_button: darkMode, feature_button_DARK: !darkMode}" @click='toggleDarkMode()'>Dark Mode: On</button>
-                <button id="instructions-btn" :class="{feature_button: darkMode, feature_button_DARK: !darkMode}" @click='showInstructions()'>How to Play</button>
+                <button id="start-btn"        :class="{feature_button: !darkMode, feature_button_DARK: darkMode}" @click='initializeGame()'>Reset Game</button>
+                <button id="dark-mode-btn"    :class="{feature_button: !darkMode, feature_button_DARK: darkMode}" @click='toggleDarkMode()'>Dark Mode: On</button>
+                <button id="instructions-btn" :class="{feature_button: !darkMode, feature_button_DARK: darkMode}" @click='showInstructions()'>How to Play</button>
             </div>
             <div class="flex-column" id="current-card-container">
                 <div id="card-display" class="flex-column" style="margin-top: 15px; width: 305px; height: 431px;">
